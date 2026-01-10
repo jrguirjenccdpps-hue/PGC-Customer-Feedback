@@ -6,120 +6,138 @@
 <title>Customer Feedback Form</title>
 
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f8f5;
-    color: #333;
-    padding: 20px;
-  }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6f5;
+  color: #333;
+  padding: 20px;
+}
 
-  h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #2e7d32;
-  }
+h2 {
+  text-align: center;
+  color: #2e7d32;
+  margin-bottom: 20px;
+}
 
-  form {
-    max-width: 600px;
-    margin: auto;
-    background: #fff;
-    padding: 25px 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  }
+form {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
 
-  label {
-    display: block;
-    margin-top: 14px;
-    font-weight: 600;
-  }
+label {
+  font-weight: 600;
+  display: block;
+  margin-top: 14px;
+}
 
-  input[type=text], select, textarea {
-    width: 100%;
-    padding: 10px 12px;
-    margin-top: 6px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-  }
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
 
-  input[type=text]:focus,
-  select:focus,
-  textarea:focus {
-    border-color: #2e7d32;
-    outline: none;
-  }
+input:focus, select:focus, textarea:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
 
-  textarea { resize: vertical; }
+textarea { resize: vertical; }
 
-  .helper-text {
-    font-size: 12px;
-    color: #666;
-    margin-top: 4px;
-  }
+.radio-group {
+  display: flex;
+  gap: 20px;
+  margin-top: 6px;
+}
 
-  .radio-group {
-    margin-top: 6px;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
+.section {
+  border-top: 1px solid #eee;
+  padding-top: 18px;
+  margin-top: 18px;
+}
 
-  input[type=checkbox] { margin-right: 8px; }
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
 
-  input[type=submit] {
-    margin-top: 22px;
-    width: 100%;
-    padding: 12px;
-    background: #2e7d32;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+.char-counter {
+  font-size: 12px;
+  color: #666;
+  text-align: right;
+}
 
-  input[type=submit]:hover {
-    background: #1b4d23;
-  }
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 12px;
+  background: #2e7d32;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-  .toast {
-    visibility: hidden;
-    min-width: 250px;
-    background-color: #4caf50;
-    color: #fff;
-    text-align: center;
-    border-radius: 8px;
-    padding: 16px;
-    position: fixed;
-    z-index: 999;
-    left: 50%;
-    bottom: 40px;
-    transform: translateX(-50%) translateY(40px);
-    opacity: 0;
-    transition: all 0.4s ease;
-    font-weight: bold;
-  }
+button.loading {
+  background: #9e9e9e;
+  cursor: not-allowed;
+}
 
-  .toast.show {
-    visibility: visible;
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
 
-  @media (max-width: 500px) {
-    form { padding: 20px; }
-  }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-  .credit {
-    text-align: center;
-    font-size: 12px;
-    color: #777;
-    margin-top: 15px;
-  }
+.toast {
+  visibility: hidden;
+  background: #4caf50;
+  color: #fff;
+  padding: 14px;
+  border-radius: 8px;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.credit {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-top: 14px;
+}
+
+@media (max-width: 500px) {
+  form { padding: 20px; }
+}
 </style>
 </head>
 
@@ -128,30 +146,42 @@
 <h2>Customer Feedback Form</h2>
 
 <div id="toastMessage" class="toast">
-  Thank you! Your feedback has been recorded.
+✅ Thank you! Your feedback has been recorded.
 </div>
 
 <iframe name="hidden_iframe" style="display:none;" onload="submitted();"></iframe>
 
-<form action="https://script.google.com/macros/s/AKfycbz3SlTxkRqpLrOL7fhyPeJ3IKnD3q83d_ppzXHquOkptze6ipMlp5AzVY-XkHX515vN/exec"
-      method="post" target="hidden_iframe" id="feedbackForm">
+<form id="feedbackForm"
+action="https://script.google.com/macros/s/AKfycbxc2AwN9lwB13VqrN6bZYE46dNB2ZTysB8pfbT4v3xFMeuZ8UQeZLiNTIXT5GvuK4o/exec"
+method="post"
+target="hidden_iframe">
 
-  <!-- Customer Name -->
+<!-- CUSTOMER INFO -->
+<div class="section">
+  <div class="section-title">Customer Information</div>
+
   <label>Customer Name (Optional)</label>
-  <input type="text" name="customerName" placeholder="Enter your name">
-  <div class="helper-text">Optional: Fill if you want to be identified.</div>
+  <input type="text" name="customerName">
 
-  <!-- Branch Name -->
-  <label>Branch Name <span style="color:#d32f2f">*</span></label>
-  <input type="text" name="branchName" required placeholder="Enter Branch Name exactly as on Official Branch Signage">
-  <div class="helper-text">
-    Must match the exact branch name displayed on the tarpaulin outside the branch.
-  </div>
+  <label>Branch Name</label>
+  <input type="text" name="branchName" required
+  placeholder="Enter branch name exactly as on official branch signage">
+</div>
 
-  <!-- Transaction Type -->
-  <label>Transaction Type <span style="color:#d32f2f">*</span></label>
+<!-- TRANSACTION -->
+<div class="section">
+  <div class="section-title">Transaction Details</div>
+
+  <label>Customer Type</label>
+  <select name="customerType" required>
+    <option value="">Select</option>
+    <option>New</option>
+    <option>Returning</option>
+  </select>
+
+  <label>Transaction Type</label>
   <select name="transactionType" required>
-    <option value="">Select Transaction</option>
+    <option value="">Select</option>
     <option>Pawning</option>
     <option>Pera Padala</option>
     <option>International Remittance</option>
@@ -159,75 +189,96 @@
     <option>Bills Payment</option>
     <option>Other</option>
   </select>
-  <div class="helper-text">Choose the service you availed during this visit.</div>
 
-  <!-- Waiting Time -->
-  <label>Waiting Time <span style="color:#d32f2f">*</span></label>
+  <label>Waiting Time</label>
   <select name="waitingTime" required>
-    <option value="">Select Waiting Time</option>
-    <option>Less Than 5mins</option>
-    <option>5-10Mins</option>
-    <option>10-20Mins</option>
-    <option>More than 20mins</option>
+    <option value="">Select</option>
+    <option>Less than 5 minutes</option>
+    <option>5–10 minutes</option>
+    <option>10–20 minutes</option>
+    <option>More than 20 minutes</option>
   </select>
-  <div class="helper-text">Estimate how long you waited in line.</div>
+</div>
 
-  <!-- Overall Satisfaction -->
-  <label>Overall Satisfaction (1–5) <span style="color:#d32f2f">*</span></label>
+<!-- SERVICE FEEDBACK -->
+<div class="section">
+  <div class="section-title">Service Feedback</div>
+
+  <label>Overall Satisfaction (1–5)</label>
   <select name="satisfaction" required>
-    <option value="">Select Rating</option>
-    <option value="1">1 - Very Poor</option>
-    <option value="2">2 - Poor</option>
-    <option value="3">3 - Average</option>
-    <option value="4">4 - Good</option>
-    <option value="5">5 - Excellent</option>
+    <option value="">Select</option>
+    <option>1 - Very Poor</option>
+    <option>2 - Poor</option>
+    <option>3 - Average</option>
+    <option>4 - Good</option>
+    <option>5 - Excellent</option>
   </select>
-  <div class="helper-text">Rate your overall experience during this visit.</div>
 
-  <!-- Recommend -->
-  <label>Would you recommend us? <span style="color:#d32f2f">*</span></label>
+  <label>Would you recommend us?</label>
   <div class="radio-group">
     <label><input type="radio" name="recommend" value="Yes" required> Yes</label>
     <label><input type="radio" name="recommend" value="No"> No</label>
   </div>
-  <div class="helper-text">Would you suggest our branch to your friends or family?</div>
+</div>
 
-  <!-- Like most -->
-  <label>What did you like most?</label>
-  <textarea name="likeMost" rows="2" placeholder="Your answer"></textarea>
-  <div class="helper-text">Share the service or aspect that impressed you.</div>
+<!-- COMMENTS -->
+<div class="section">
+  <div class="section-title">Comments</div>
 
-  <!-- Improve -->
-  <label>What can we improve?</label>
-  <textarea name="improve" rows="2" placeholder="Your answer"></textarea>
-  <div class="helper-text">Suggest improvements to help us serve you better.</div>
+  <label>What can we improve? (max 500 characters)</label>
+  <textarea id="improve" name="improve" maxlength="500"></textarea>
+  <div class="char-counter" id="improveCounter">0 / 500</div>
 
-  <!-- Additional Comments -->
-  <label>Additional Comments</label>
-  <textarea name="additional" rows="2" placeholder="Your answer"></textarea>
-  <div class="helper-text">Any other feedback you want to share.</div>
+  <label>Additional Comments (max 500 characters)</label>
+  <textarea id="additional" name="additional" maxlength="500"></textarea>
+  <div class="char-counter" id="additionalCounter">0 / 500</div>
+</div>
 
-  <!-- Privacy -->
-  <label>
-    <input type="checkbox" name="privacy" required>
-    I agree that my feedback will be used for service improvement purposes.
-  </label>
+<label style="margin-top:14px;">
+  <input type="checkbox" required>
+  I agree that my feedback will be used for service improvement purposes.
+</label>
 
-  <input type="submit" value="Submit Feedback">
+<button type="submit" id="submitBtn">Submit Feedback</button>
 </form>
 
 <p class="credit">Form designed by CCR John Ramos</p>
 
 <script>
+const form = document.getElementById("feedbackForm");
+const btn = document.getElementById("submitBtn");
+
+form.addEventListener("submit", () => {
+  btn.disabled = true;
+  btn.classList.add("loading");
+  btn.innerHTML = '<span class="spinner"></span> Sending...';
+});
+
 function submitted() {
-  const form = document.getElementById('feedbackForm');
   if (form.checkValidity()) {
     form.reset();
+    btn.disabled = false;
+    btn.classList.remove("loading");
+    btn.innerHTML = "Submit Feedback";
+
     const toast = document.getElementById("toastMessage");
     toast.classList.add("show");
     setTimeout(() => toast.classList.remove("show"), 3000);
   }
 }
+
+// Character counters
+const improve = document.getElementById("improve");
+const improveCounter = document.getElementById("improveCounter");
+improve.addEventListener("input", () => {
+  improveCounter.textContent = `${improve.value.length} / 500`;
+});
+
+const additional = document.getElementById("additional");
+const additionalCounter = document.getElementById("additionalCounter");
+additional.addEventListener("input", () => {
+  additionalCounter.textContent = `${additional.value.length} / 500`;
+});
 </script>
 
 </body>
