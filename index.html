@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Feedback Form</title>
+<style>
+  /* Base styles */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f8f5; color: #333; padding: 20px; }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2e7d32; /* Green theme */
+  }
+
+  form {
+    max-width: 600px;
+    margin: auto;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+
+  label { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-weight: 600; }
+
+  input[type=text], select, textarea {
+    width: 100%;
+    padding: 10px 12px 10px 36px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  input[type=text]:focus, select:focus, textarea:focus {
+    border-color: #2e7d32;
+    outline: none;
+  }
+
+  textarea { resize: vertical; }
+
+  .icon { 
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    fill: #2e7d32;
+  }
+
+  .input-wrapper { position: relative; margin-top: 6px; }
+
+  .radio-group { margin-top: 6px; display: flex; gap: 20px; flex-wrap: wrap; }
+
+  input[type=checkbox] { margin-right: 8px; }
+
+  input[type=submit] {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #2e7d32;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  input[type=submit]:hover {
+    background: #1b4d23;
+    transform: translateY(-2px);
+  }
+
+  input::placeholder, textarea::placeholder { color: #999; }
+
+  /* Toast styles */
+  .toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #4caf50; /* Green toast */
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 999;
+    left: 50%;
+    bottom: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 500px) {
+    form { padding: 20px; }
+    input[type=text], select, textarea { padding-left: 36px; }
+  }
+
+  /* Credit note */
+  .credit {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    margin-top: 15px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Customer Feedback Form</h2>
+
+<!-- Toast -->
+<div id="toastMessage" class="toast">✅ Thank you! Your feedback has been recorded.</div>
+
+<!-- Hidden iframe to submit form without page reload -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="submitted();"></iframe>
+
+<form action="https://script.google.com/macros/s/AKfycbz3SlTxkRqpLrOL7fhyPeJ3IKnD3q83d_ppzXHquOkptze6ipMlp5AzVY-XkHX515vN/exec" method="post" target="hidden_iframe" id="feedbackForm">
+
+  <!-- Customer Name -->
+  <label for="customerName">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    Customer Name (Optional)
+  </label>
+  <div class="input-wrapper">
+    <input type="text" id="customerName" name="customerName" placeholder="Enter your name">
+  </div>
+
+  <!-- Branch Name -->
+  <label for="branchName">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 22h16v-2H4v2zm0-6h16v-2H4v2zm0-6h16V8H4v2zm0-6h16V2H4v2z"/></svg>
+    Branch Name
+  </label>
+  <div class="input-wrapper">
+    <input type="text" id="branchName" name="branchName" placeholder="Must match the branch name displayed on the tarpaulin outside the branch" required>
+  </div>
+
+  <!-- Transaction Type -->
+  <label for="transactionType">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg>
+    Transaction Type
+  </label>
+  <div class="input-wrapper">
+    <select id="transactionType" name="transactionType" required>
+      <option value="">Select Transaction</option>
+      <option value="Pawning">Pawning</option>
+      <option value="Pera Padala">Pera Padala</option>
+      <option value="International Remittance">International Remittance</option>
+      <option value="Money Changer">Money Changer</option>
+      <option value="Bills Payment">Bills Payment</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+
+  <!-- Waiting Time -->
+  <label for="waitingTime">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1a11 11 0 1011 11A11 11 0 0012 1zm1 12.59l4.3 2.51-.71 1.21-4.59-2.67V6h1v7.59z"/></svg>
+    Waiting Time
+  </label>
+  <div class="input-wrapper">
+    <select id="waitingTime" name="waitingTime" required>
+      <option value="">Select Waiting Time</option>
+      <option value="Less Than 5mins">Less Than 5mins</option>
+      <option value="5-10Mins">5-10Mins</option>
+      <option value="10-20Mins">10-20Mins</option>
+      <option value="More than 20mins">More than 20mins</option>
+    </select>
+  </div>
+
+  <!-- Overall Satisfaction -->
+  <label for="satisfaction">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21 16.54 13.97 22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg>
+    Overall Satisfaction (1-5)
+  </label>
+  <div class="input-wrapper">
+    <select id="satisfaction" name="satisfaction" required>
+      <option value="">Select Rating</option>
+      <option value="1">1 - Very Poor</option>
+      <option value="2">2 - Poor</option>
+      <option value="3">3 - Average</option>
+      <option value="4">4 - Good</option>
+      <option value="5">5 - Excellent</option>
+    </select>
+  </div>
+
+  <!-- Recommend -->
+  <label>Would you recommend us?</label>
+  <div class="radio-group">
+    <input type="radio" name="recommend" value="Yes" required> Yes
+    <input type="radio" name="recommend" value="No"> No
+  </div>
+
+  <!-- Like most -->
+  <label for="likeMost">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 9.24 3 10.91 3.81 12 5.08 13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    What did you like most?
+  </label>
+  <div class="input-wrapper">
+    <textarea id="likeMost" name="likeMost" rows="2" placeholder="Your answer"></textarea>
+  </div>
+
+  <!-- Improve -->
+  <label for="improve">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 000-1.42l-2.34-2.34a1.003 1.003 0 00-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/></svg>
+    What can we improve?
+  </label>
+  <div class="input-wrapper">
+    <textarea id="improve" name="improve" rows="2" placeholder="Your answer"></textarea>
+  </div>
+
+  <!-- Additional Comments -->
+  <label for="additional">
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+    Additional Comments
+  </label>
+  <div class="input-wrapper">
+    <textarea id="additional" name="additional" rows="2" placeholder="Your answer"></textarea>
+  </div>
+
+  <label>
+    <input type="checkbox" name="privacy" required>
+    I agree that my feedback will be used for service improvement purposes.
+  </label>
+
+  <input type="submit" value="Submit Feedback">
+</form>
+
+<!-- Credit Note -->
+<p class="credit">Form designed by CCR John Ramos</p>
+
+<script>
+window.onload = function() {
+  document.getElementById("customerName").focus(); // auto-focus
+}
+
+function submitted() {
+  const form = document.getElementById('feedbackForm');
+  if (form.checkValidity()) {
+    form.reset();
+
+    const toast = document.getElementById("toastMessage");
+    toast.classList.add("show");
+
+    // Hide toast after 3 seconds
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+}
+</script>
+
+</body>
+</html>
